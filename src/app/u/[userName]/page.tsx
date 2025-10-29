@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 
-function page() {
+function Page() {
     const params = useParams<{userName: string}>();
     const [message, setMessage] = useState("")
 
@@ -84,4 +84,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

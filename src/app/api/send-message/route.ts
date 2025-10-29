@@ -6,14 +6,14 @@ export async function POST(request: Request) {
   const { username, content } = await request.json();
 
   try {
-    const user = await userModel.findOne({ username }).exec();
-
+    const user = await userModel.findOne({ userName:username }).exec();
     if (!user) {
       return Response.json(
         { message: 'User not found', success: false },
         { status: 404 }
       );
     }
+    
 
     // Check if the user is accepting messages
     if (!user.isAcceptingMessages) {

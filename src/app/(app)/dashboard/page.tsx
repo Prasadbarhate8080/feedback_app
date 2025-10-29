@@ -83,7 +83,6 @@ function UserDashboard() {
         }
       } catch (error) {
         const axiosError = error as AxiosError<apiResponse>;
-        console.log(axiosError)
         toast(
           <div>
             <strong style={{fontSize:'16px'}}></strong>

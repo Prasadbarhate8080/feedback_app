@@ -1,5 +1,4 @@
 "use client"
-import { Input } from '@/components/ui/input';
 import { apiResponse } from '@/types/apiResponse';
 import axios, { AxiosError } from 'axios';
 import { useParams } from 'next/navigation'
@@ -7,7 +6,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 
 function page() {
-    let params = useParams<{userName: string}>();
+    const params = useParams<{userName: string}>();
     const [message, setMessage] = useState("")
 
     async function sendMessage() {
@@ -64,7 +63,7 @@ function page() {
             onClick={(e) => {
                 setMessage(e.currentTarget.innerText)
             }}
-            >What's a hobby you've recently started?</div>
+            >Whats a hobby you've recently started?</div>
             <div className='p-3 border rounded-md text-center hover:bg-gray-50 cursor-pointer'
             onClick={(e) => {
                 setMessage(e.currentTarget.innerText)
@@ -74,7 +73,7 @@ function page() {
             onClick={(e) => {
                 setMessage(e.currentTarget.innerText)
             }}
-            >What’s a simple thing that makes you happy?</div>
+            >Whats a simple thing that makes you happy?</div>
         </div>
       </div>
       <h3 className='mt-6  text-center font-semibold'>Get Your Message Board</h3>

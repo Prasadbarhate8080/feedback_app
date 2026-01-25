@@ -17,7 +17,6 @@ export async function GET() {
       { status: 401 }
     );
   }
-  const userId = new mongoose.Types.ObjectId(_user._id);
   try {
     const messages = await userModel.aggregate([
       { $match: { email: _user.email } },

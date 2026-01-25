@@ -5,7 +5,7 @@ import { dbConnect } from '@/lib/dbConnect';
 import { userModel } from '@/models/user.model';
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"
-import { authUserModel } from '@/models/authUser.model';
+import { User } from '@/models/user.model';
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
           email: { label: 'Email', type: 'text' },
           password: { label: 'Password', type: 'password' },
         },
-        async authorize(credentials: any): Promise<any> {
+        async authorize(credentials: {identifier:string,email:string,userName:string,password:string} ): Promise<User> {
           await dbConnect();
           try {
             const user = await userModel.findOne({
@@ -40,8 +40,10 @@ export const authOptions: NextAuthOptions = {
             } else {
               throw new Error('invalid credentials');
             }
-          } catch (err: any) {
-            throw new Error(err);
+          } catch (err) {
+            throw new Error(
+            err instanceof Error ? err.message : "Authentication failed"
+          );
           }
         },
       }),

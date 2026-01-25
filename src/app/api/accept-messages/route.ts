@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]/options';
-import { dbConnect } from '@/lib/dbConnect'; 
+import { dbConnect } from '@/lib/dbConnect';
 import { userModel } from '@/models/user.model';
 import { User } from 'next-auth';
 
@@ -17,7 +17,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const userId = user._id;
   const { acceptMessages } = await request.json();
 
   try {

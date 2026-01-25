@@ -1,10 +1,10 @@
 import { userModel } from "@/models/user.model";
 import { dbConnect } from "@/lib/dbConnect";
 import { Message } from "@/models/user.model";
+
 export async function POST(request: Request) {
   await dbConnect();
-  const { username, content } = await request.json();
-
+  const { username, content } = await request.json(); //in next js request is in the form of stream thats whay we need to parse it to json
   try {
     const user = await userModel.findOne({ userName:username }).exec();
     if (!user) {
@@ -13,8 +13,6 @@ export async function POST(request: Request) {
         { status: 404 }
       );
     }
-    
-
     // Check if the user is accepting messages
     if (!user.isAcceptingMessages) {
       return Response.json(

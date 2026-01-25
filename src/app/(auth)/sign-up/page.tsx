@@ -71,7 +71,6 @@ export default function SignUpForm() {
     setIsSubmitting(true);
     try {
       const response = await axios.post<apiResponse>('/api/sign-up', data);
-
       // toast({
       //   title: 'Success',
       //   description: response.data.message,

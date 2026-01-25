@@ -22,12 +22,12 @@ export async function POST(request: Request) {
 
   try {
     // Update the user's message acceptance status
-    const updatedUser = await userModel.findByIdAndUpdate(
-      userId,
+    const updatedUser = await userModel.findOneAndUpdate(
+      {email:user.email},
       { isAcceptingMessages: acceptMessages },
       { new: true }
     );
-
+    
     if (!updatedUser) {
       // User not found
       return Response.json(
@@ -64,8 +64,8 @@ export async function GET() {
 
   // Get the user session
   const session = await getServerSession(authOptions);
-  const user = session?.user;
-
+  // const user = session?.user;
+  const user: User = session?.user as User
   // Check if the user is authenticated
   if (!session || !user) {
     return Response.json(
@@ -76,7 +76,7 @@ export async function GET() {
 
   try {
     // Retrieve the user from the database using the ID
-    const foundUser = await userModel.findById(user._id);
+    const foundUser = await userModel.findOne({email:user.email});
 
     if (!foundUser) {
       // User not found

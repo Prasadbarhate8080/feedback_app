@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import axios, { AxiosError } from 'axios';
@@ -28,42 +28,41 @@ type MessageCardProps = {
   onMessageDelete: (messageId: string) => void;
 };
 
-export function MessageCard({ message , onMessageDelete }: MessageCardProps) {
-
+export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
   const handleDeleteConfirm = async () => {
     try {
       const response = await axios.delete<apiResponse>(
         `/api/delete-message/${message._id}`
       );
-      toast( response.data.message,
-      );
+      toast(response.data.message);
       onMessageDelete(String(message._id));
-
     } catch (error) {
       const axiosError = error as AxiosError<apiResponse>;
       toast(
-          <div>
-            <strong style={{ fontSize: '16px' }}> Error</strong>
-            <div style={{ fontSize: '14px' }}>{axiosError.response?.data.message ?? 'Failed to delete message'}</div>
-          </div>,
-          {
-            type:'error',
-            hideProgressBar: true,
-            closeButton:false
-          }
-        )
-    } 
+        <div>
+          <strong style={{ fontSize: '16px' }}> Error</strong>
+          <div style={{ fontSize: '14px' }}>
+            {axiosError.response?.data.message ?? 'Failed to delete message'}
+          </div>
+        </div>,
+        {
+          type: 'error',
+          hideProgressBar: true,
+          closeButton: false,
+        }
+      );
+    }
   };
 
   return (
-    <Card className="card-bordered">
+    <Card className='card-bordered'>
       <CardHeader>
-        <div className="flex justify-between items-center">
+        <div className='flex justify-between items-center'>
           <CardTitle>{message.content}</CardTitle>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant='destructive'>
-                <X className="w-5 h-5" />
+                <X className='w-5 h-5' />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -75,9 +74,7 @@ export function MessageCard({ message , onMessageDelete }: MessageCardProps) {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>
-                  Cancel
-                </AlertDialogCancel>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction onClick={handleDeleteConfirm}>
                   Continue
                 </AlertDialogAction>
@@ -85,7 +82,7 @@ export function MessageCard({ message , onMessageDelete }: MessageCardProps) {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-        <div className="text-sm">
+        <div className='text-sm'>
           {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}
         </div>
       </CardHeader>

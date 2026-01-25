@@ -19,7 +19,7 @@ function Navbar() {
         {session ? (
           <>
             <span className="mr-4">
-              Welcome, {user.userName || user.email}
+              Welcome, {user.userName || user.name || user.email}
             </span>
             <Button onClick={() => signOut()} className="w-full md:w-auto bg-slate-100 text-black" variant='outline'>
               Logout

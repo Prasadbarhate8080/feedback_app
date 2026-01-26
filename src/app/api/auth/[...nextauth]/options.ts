@@ -40,8 +40,12 @@ export const authOptions: NextAuthOptions = {
           }
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
           if (isPasswordCorrect) {
+            const userId = user._id?.toString();
+            if (!userId) {
+              throw new Error("User ID missing");
+            }
             return {
-              id: user._id.toString(),
+              id: userId,
               email: user.email,
               userName: user.userName,
               isVerified: user.isVerified,

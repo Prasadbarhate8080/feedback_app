@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
         const existingUser = await userModel.findOne({ userName: user.name?.replace(' ', '_') });
         if(existingUser)
         {
-          let userId = String(existingUser._id);
+          const userId = String(existingUser._id);
           user._id = userId;
         }
         if (!existingUser) {

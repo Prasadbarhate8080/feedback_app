@@ -2,10 +2,17 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { dbConnect } from '@/lib/dbConnect';
-import { userModel } from '@/models/user.model';
+import { User, userModel } from '@/models/user.model';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
-import { User } from '@/models/user.model';
+
+interface user{
+  id:string,
+  email: string
+  userName: string
+  isVerified: boolean
+  isAcceptingMessages: boolean
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,10 +23,13 @@ export const authOptions: NextAuthOptions = {
         identifier: { label: 'Email/Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials: Record<"identifier" | "password", string> | undefined): Promise<user | null> {
+        if (!credentials) {
+          return null;
+        }
         await dbConnect();
         try {
-          const user = await userModel.findOne({
+          const user:User | null = await userModel.findOne({
             $or: [{ email: credentials.identifier }, { userName: credentials.identifier }],
           });
           if (!user) {
@@ -36,7 +46,7 @@ export const authOptions: NextAuthOptions = {
               userName: user.userName,
               isVerified: user.isVerified,
               isAcceptingMessages: user.isAcceptingMessages,
-            } as any;
+            };
           } else {
             throw new Error('invalid credentials');
           }

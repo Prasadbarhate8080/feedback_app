@@ -76,9 +76,14 @@ export const authOptions: NextAuthOptions = {
       console.log('i am inside the signin callback');
       if (account?.provider !== 'credentials') {
         const existingUser = await userModel.findOne({ userName: user.name?.replace(' ', '_') });
+        if(existingUser)
+        {
+          let userId = String(existingUser._id);
+          user._id = userId;
+        }
         if (!existingUser) {
           // ✅ Create new user for OAuth login
-          await userModel.create({
+          const newUser = await userModel.create({
             userName: user.name?.replace(' ', '_'),
             email: user.email,
             password: 'hashedPassword',
@@ -88,6 +93,7 @@ export const authOptions: NextAuthOptions = {
             isAcceptingMessages: true,
             messages: [],
           });
+          user._id = newUser._id?.toString();
         }
       }
       return true;

@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
           }
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
           if (isPasswordCorrect) {
-            const userId = user._id?.toString();
+            const userId = user.id?.toString();
             if (!userId) {
               throw new Error("User ID missing");
             }
@@ -73,13 +73,12 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       // ✅ When OAuth login happens, link to existing account
-      console.log('i am inside the signin callback');
       if (account?.provider !== 'credentials') {
         const existingUser = await userModel.findOne({ userName: user.name?.replace(' ', '_') });
         if(existingUser)
         {
-          const userId = String(existingUser._id);
-          user._id = userId;
+          const userId = String(existingUser.id);
+          user.id = userId;
         }
         if (!existingUser) {
           // ✅ Create new user for OAuth login
@@ -93,7 +92,7 @@ export const authOptions: NextAuthOptions = {
             isAcceptingMessages: true,
             messages: [],
           });
-          user._id = newUser._id?.toString();
+          user.id = newUser.id?.toString()!;
         }
       }
       return true;
@@ -101,7 +100,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         // console.log("user:",user,"token:",token)
-        token._id = user._id?.toString(); // Convert ObjectId to string
+        token.id = user.id?.toString(); // Convert ObjectId to string
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
         token.userName = user.userName;
@@ -111,7 +110,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         // console.log("session:",session,"token:",token)
-        session.user._id = token._id;
+        session.user.id = token.id;
         session.user.isVerified = token.isVerified;
         session.user.isAcceptingMessages = token.isAcceptingMessages;
         session.user.userName = token.userName;

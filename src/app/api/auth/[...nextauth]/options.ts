@@ -32,6 +32,7 @@ export const authOptions: NextAuthOptions = {
           const user:User | null = await userModel.findOne({
             $or: [{ email: credentials.identifier }, { userName: credentials.identifier }],
           });
+          console.log("user found:",user)
           if (!user) {
             throw new Error('invalid credentials');
           }
@@ -40,7 +41,7 @@ export const authOptions: NextAuthOptions = {
           }
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
           if (isPasswordCorrect) {
-            const userId = user.id.toString();
+            const userId = user._id.toString();
             if (!userId) {
               throw new Error("User ID missing");
             }

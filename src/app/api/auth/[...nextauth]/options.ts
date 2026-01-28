@@ -82,7 +82,7 @@ export const authOptions: NextAuthOptions = {
         }
         if (!existingUser) {
           // ✅ Create new user for OAuth login
-          const newUser = await userModel.create({
+          const newUser:User = await userModel.create({
             userName: user.name?.replace(' ', '_'),
             email: user.email,
             password: 'hashedPassword',
@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
             isAcceptingMessages: true,
             messages: [],
           });
-          user.id =(newUser._id as any).toString();
+          user.id = newUser._id.toString();
         }
       }
       return true;

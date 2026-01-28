@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export interface Message extends Document {
   _id: string;
@@ -18,7 +18,7 @@ const messageSchema: Schema<Message> = new Schema({
   },
 });
 
-export interface User extends Document {
+export interface User extends Document<Types.ObjectId> {
   userName: string;
   email: string;
   password: string;

@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
           }
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
           if (isPasswordCorrect) {
-            const userId = user.id?.toString();
+            const userId = user.id.toString();
             if (!userId) {
               throw new Error("User ID missing");
             }
@@ -77,7 +77,7 @@ export const authOptions: NextAuthOptions = {
         const existingUser = await userModel.findOne({ userName: user.name?.replace(' ', '_') });
         if(existingUser)
         {
-          const userId = String(existingUser.id);
+          const userId = String(existingUser._id);
           user.id = userId;
         }
         if (!existingUser) {
@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
             isAcceptingMessages: true,
             messages: [],
           });
-          user.id = newUser.id?.toString()!;
+          user.id =(newUser._id as any).toString();
         }
       }
       return true;
@@ -100,7 +100,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         // console.log("user:",user,"token:",token)
-        token.id = user.id?.toString(); // Convert ObjectId to string
+        token.id = user.id.toString(); // Convert ObjectId to string
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
         token.userName = user.userName;

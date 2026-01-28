@@ -10,7 +10,7 @@ export async function sendVerificationEmail(
   try {
     // console.log(email,username,verifyCode);
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'TrueFeedback <no-reply@pdftoolify.com>',
       to: email,
       subject: 'Mystery Message Verification Code',
       react: verificationEmail({ username, otp: verifyCode }),

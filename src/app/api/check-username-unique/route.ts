@@ -14,11 +14,9 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const queryParams = {
       username: searchParams.get('username'),
-    };  
-    console.log(queryParams.username)
+    };
     const result = UsernameQuerySchema.safeParse(queryParams);
 
-    console.log(result)
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
       return Response.json(
@@ -34,11 +32,12 @@ export async function GET(request: Request) {
     }
 
     const { username } = result.data;
-
     const existingVerifiedUser = await userModel.findOne({
-      username,
+      userName:username,
       isVerified: true,
     });
+
+    console.log("user with username:",existingVerifiedUser)
 
     if (existingVerifiedUser) {
       return Response.json(
@@ -46,7 +45,7 @@ export async function GET(request: Request) {
           success: false,
           message: 'Username is already taken',
         },
-        { status: 200 }
+        { status: 400 }
       );
     }
 

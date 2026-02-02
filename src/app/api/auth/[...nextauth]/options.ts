@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
             password: 'hashedPassword',
             verifyCode: 'verifyCode',
             verifyCodeExpiry: Date.now(),
-            isVerified: false,
+            isVerified: true,
             isAcceptingMessages: true,
             messages: [],
           });

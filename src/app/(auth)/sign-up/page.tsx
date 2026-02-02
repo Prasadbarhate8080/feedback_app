@@ -43,7 +43,6 @@ export default function SignUpForm() {
       password: '',
     },
   });
-
   useEffect(() => {
     const checkUsernameUnique = async () => {
       if (username) {

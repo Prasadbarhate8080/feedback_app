@@ -16,7 +16,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { signInSchema } from '@/schemas/signInSchema';
-
+import {Github} from "lucide-react"
+import Image from 'next/image';
 export default function SignInForm() {
   const handleGoogleLogin = () => {
     signIn('google', { callbackUrl: '/' });
@@ -79,7 +80,7 @@ export default function SignInForm() {
   };
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-gray-800'>
+    <div className='flex justify-center items-center min-h-screen bg-gray-800 px-2'>
       <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
         <div className='text-center'>
           <h1 className='text-4xl font-extrabold tracking-tight lg:text-5xl mb-6'>
@@ -95,7 +96,7 @@ export default function SignInForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email/Username</FormLabel>
-                  <Input {...field} />
+                  <Input required {...field} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -106,7 +107,7 @@ export default function SignInForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <Input type='password' {...field} />
+                  <Input required type='password' {...field} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -118,20 +119,15 @@ export default function SignInForm() {
 
           <hr className='my-4' />
           {/* Google Login Button */}
-          <div className='flex gap-2 justify-center'>
-            <button
-              onClick={handleGoogleLogin}
-              className='bg-red-500 text-white p-2 rounded'
-            >
+          <div className='flex gap-2 justify-center flex-wrap'>
+            <button onClick={handleGoogleLogin} className='border text-sm p-2 rounded-md  items-center gap-2 flex'>
+              <Image src={'/google.svg'} alt='google' height={14} width={14} />
               Continue with Google
             </button>
 
             {/* GitHub Login Button */}
-            <button
-              onClick={handleGithubLogin}
-              className='bg-gray-800 text-white p-2 rounded'
-            >
-              Continue with GitHub
+            <button onClick={handleGithubLogin} className='border text-sm p-2 rounded-md items-center gap-2 flex'>
+              <Github strokeWidth={2.3} size={15}/>Continue with GitHub
             </button>
           </div>
         </Form>

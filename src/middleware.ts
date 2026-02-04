@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ 
                                   req: request,
                                   secret:secrete,
-                                  cookieName: "__Secure-next-auth.session-token"
+                                  cookieName: "next-auth.session-token"
                                 });
   const url = request.nextUrl;
   // Redirect to dashboard if the user is already authenticated

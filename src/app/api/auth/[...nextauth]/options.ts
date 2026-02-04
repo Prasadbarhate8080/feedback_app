@@ -76,7 +76,9 @@ export const authOptions: NextAuthOptions = {
       // ✅ When OAuth login happens, link to existing account
       await dbConnect();
       if (account?.provider !== 'credentials') {
-        const existingUser = await userModel.findOne({ userName: user.name?.replace(' ', '_') ,email:user.email});
+        const existingUser = await userModel.findOne({
+          $or: [{ userName: user.name?.replace(' ', '_')}, {email: user.email }],
+        });
         if(existingUser)
         {
           const userId = String(existingUser._id);

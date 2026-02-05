@@ -6,10 +6,9 @@ export const config = {
 };
 const secrete = process.env.NEXT_AUTH_SECRET;
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ 
+  const token = await getToken({
                                   req: request,
                                   secret:secrete,
-                                  cookieName: "next-auth.session-token"
                                 });
   const url = request.nextUrl;
   // Redirect to dashboard if the user is already authenticated

@@ -120,14 +120,21 @@ export default function SignInForm() {
           <hr className='my-4' />
           {/* Google Login Button */}
           <div className='flex gap-2 justify-center flex-wrap'>
-            <button onClick={handleGoogleLogin} className='border text-sm p-2 rounded-md  items-center gap-2 flex'>
+            <button
+              onClick={handleGoogleLogin}
+              className='border text-sm p-2 rounded-md  items-center gap-2 flex active:bg-gray-100'
+            >
               <Image src={'/google.svg'} alt='google' height={14} width={14} />
               Continue with Google
             </button>
 
             {/* GitHub Login Button */}
-            <button onClick={handleGithubLogin} className='border text-sm p-2 rounded-md items-center gap-2 flex'>
-              <Github strokeWidth={2.3} size={15}/>Continue with GitHub
+            <button
+              onClick={handleGithubLogin}
+              className='border text-sm p-2 rounded-md items-center gap-2 flex active:bg-gray-100'
+            >
+              <Github strokeWidth={2.3} size={15} />
+              Continue with GitHub
             </button>
           </div>
         </Form>

@@ -6,6 +6,7 @@ export async function POST(request: Request) {
   await dbConnect();
   const { username, content } = await request.json(); //in next js request is in the form of stream thats whay we need to parse it to json
   try {
+    console.log(username)
     const user = await userModel.findOne({ userName:username }).exec();
     if (!user) {
       return Response.json(

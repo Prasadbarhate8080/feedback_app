@@ -83,6 +83,15 @@ export const authOptions: NextAuthOptions = {
         {
           const userId = String(existingUser._id);
           user.id = userId;
+          let updateedUser = userModel.updateOne(
+            {
+              $or: [{ userName: user.name?.replace(' ', '_') }, { email: user.email }],
+            },
+            {
+              userName: user.name?.replace(' ', '_'),
+              email: user.email,
+            }
+          );
         }
         if (!existingUser) {
           // ✅ Create new user for OAuth login
